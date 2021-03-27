@@ -8,11 +8,15 @@ void Hand::clear()
 {
     // проходит по вектору, освобождая всю память в куче
     std::vector<Card*>::iterator iter = m_cards.begin();
-    for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
+    //!!!!!!! Home work
+    for (auto iter:m_cards)
+    //for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
     {
-        delete* iter;
-        *iter = 0;
+        delete iter;
+        iter = 0;
     }
+
+
     m_cards.clear();
 }
 
@@ -31,16 +35,20 @@ int Hand::getTotal() const
     // находит сумму очков всех карт, каждый туз дает 1 очко
     int total = 0;
     std::vector<Card*>::const_iterator iter;
-    for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
+    // for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
+    //!!!!!!! Home work
+    for (Card* iter : m_cards )
     {
-        total += (*iter)->getValue();
+        total += (iter)->getValue();
     }
 
     // определяет, держит ли рука туз
     bool containsAce = false;
-    for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
+    // for (iter = m_cards.begin(); iter != m_cards.end(); ++iter)
+    //!!!!!!! Home work
+    for (Card* iter : m_cards)
     {
-        if ((*iter)->getValue() == Card::ACE)
+        if ((iter)->getValue() == Card::ACE)
         {
             containsAce = true;
         }

@@ -8,9 +8,11 @@ Game::Game(const vector<string>& names)
 {
     // создает вектор игроков из вектора с именами
     vector<string>::const_iterator pName;
-    for (pName = names.begin(); pName != names.end(); ++pName)
+    //for (pName = names.begin(); pName != names.end(); ++pName)
+    //!!!!!!! Home work
+    for (const string name : names)
     {
-        m_players.push_back(Player(*pName));
+        m_players.push_back(Player(name));
     }
 
     // запускает генератор случайных чисел
@@ -29,9 +31,11 @@ void Game::play()
     vector<Player>::iterator pPlayer;
     for (int i = 0; i < startCardCount; ++i)
     {
-        for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+        //for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+        //!!!!!!! Home work
+        for (Player &pPlayer : m_players)
         {
-            m_deck.deal(*pPlayer);
+            m_deck.deal(pPlayer);
         }
         m_deck.deal(m_house);
     }
@@ -40,16 +44,20 @@ void Game::play()
     m_house.flipFirstCard();
 
     // открывает руки всех игроков
-    for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+    //for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+    //!!!!!!! Home work
+    for (Player& pPlayer : m_players)
     {
-        cout << *pPlayer << endl;
+        cout << pPlayer << endl;
     }
     cout << m_house << endl;
 
     // раздает игрокам дополнительные карты
-    for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+    // for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+    //!!!!!!! Home work
+    for (Player& pPlayer : m_players)
     {
-        m_deck.additionalCards(*pPlayer);
+        m_deck.additionalCards(pPlayer);
     }
 
     // показывает первую карту дилера
@@ -62,33 +70,37 @@ void Game::play()
     if (m_house.isBusted())
     {
         // все, кто остался в игре, побеждают
-        for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+        // for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+        //!!!!!!! Home work
+        for (Player& pPlayer : m_players)
         {
-            if (!(pPlayer->isBusted()))
+            if (!(pPlayer.isBusted()))
             {
-                pPlayer->win();
+                pPlayer.win();
             }
         }
     }
     else
     {
         // сравнивает суммы очков всех оставшихся игроков с суммой очков дилера
-        for (pPlayer = m_players.begin(); pPlayer != m_players.end();
-            ++pPlayer)
+        //for (pPlayer = m_players.begin(); pPlayer != m_players.end();
+         //   ++pPlayer)
+        //!!!!!!! Home work
+        for (Player& pPlayer : m_players)
         {
-            if (!(pPlayer->isBusted()))
+            if (!(pPlayer.isBusted()))
             {
-                if (pPlayer->getTotal() > m_house.getTotal())
+                if (pPlayer.getTotal() > m_house.getTotal())
                 {
-                    pPlayer->win();
+                    pPlayer.win();
                 }
-                else if (pPlayer->getTotal() < m_house.getTotal())
+                else if (pPlayer.getTotal() < m_house.getTotal())
                 {
-                    pPlayer->lose();
+                    pPlayer.lose();
                 }
                 else
                 {
-                    pPlayer->push();
+                    pPlayer.push();
                 }
             }
         }
@@ -96,9 +108,11 @@ void Game::play()
     }
 
     // очищает руки всех игроков
-    for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+    // for (pPlayer = m_players.begin(); pPlayer != m_players.end(); ++pPlayer)
+    //!!!!!!! Home work
+    for (Player &pPlayer : m_players)
     {
-        pPlayer->clear();
+        pPlayer.clear();
     }
     m_house.clear();
 }
